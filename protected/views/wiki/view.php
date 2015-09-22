@@ -11,6 +11,7 @@
 $clientScript = Yii::app()->clientScript;
 
 $clientScript->registerCssFile('/css/json-viewer.css');
+$clientScript->registerCssFile('/css/org-wiki.css');
 $clientScript->registerScriptFile('/js/jquery.js');
 $clientScript->registerScriptFile('/js/json-viewer.js');
 

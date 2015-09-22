@@ -1,3 +1,8 @@
+create database org_wiki;
+use org_wiki;
+grant all privileges  on org_wiki.* to org_wiki@'%' identified by 'vc9buPnWQ4xdYTJP';
+flush privileges;
+
 CREATE TABLE `t_config` (
   `key` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -18,3 +23,5 @@ CREATE TABLE `t_wiki_repository` (
   `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'path of the repository',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+

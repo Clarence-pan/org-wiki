@@ -36,7 +36,7 @@ class WikiPage extends BaseModel
      * @return string
      * @throws CmdExecutionFailException
      */
-    public function toHtml(){
+    public function toHtmlByPandoc(){
         if (!file_exists($this->htmlCachePath) or filemtime($this->htmlCachePath) < filemtime($this->path)){
             $cmd = sprintf('pandoc -f org -t html "%s" -o "%s"', $this->path, $this->htmlCachePath);
 
@@ -52,6 +52,17 @@ class WikiPage extends BaseModel
         }
 
         return file_get_contents($this->htmlCachePath);
+    }
+
+    public function toHtml(){
+        #if (file_exists($this->htmlCachePath) and filemtime($this->htmlCachePath) >= filemtime($this->path)){
+        #    return file_get_contents($this->htmlCachePath);
+        #}
+
+        $converter = new OrgToHtmlRender($this->textContent);
+        $html = $converter->renderHtml();
+        file_put_contents($this->htmlCachePath, $html);
+        return $html;
     }
 
     /**
