@@ -20,4 +20,26 @@ class Controller extends CController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+
+    /**
+     * @return string|void
+     */
+    public function createUrl($route,$params=array(),$ampersand='&'){
+        $buildQuery = function($params){
+            return $params ? '?'.http_build_query($params) : '';
+        };
+        if ($route == '/site/index'){
+            return '/index.php' . $buildQuery($params);
+        } elseif ($route == '/wiki/view' && $params['pageName']){
+            $pageName = $params['pageName'];
+            unset($params['pageName']);
+            return '/'.$pageName.WikiPage::getFileExtension().$buildQuery($params);
+        } elseif ($route == '/wiki/index'){
+            return '/list'.$buildQuery($params);
+        } elseif ($route == '/site/page' && $params['view']){
+            return '/page/'.$params['view'];
+        }
+
+        return parent::createUrl($route, $params, $ampersand);
+    }
 }
