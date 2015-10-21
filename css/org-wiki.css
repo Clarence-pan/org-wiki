@@ -34,3 +34,8 @@
 html{
     padding-bottom: 100vh;
 }
+
+.wiki-page pre{
+    margin-top: 0;
+    margin-bottom: 0;
+}
