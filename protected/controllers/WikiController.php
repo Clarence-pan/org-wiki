@@ -25,9 +25,13 @@ class WikiController extends Controller {
     }
 
     public function actionView($pageName){
-        $user = User::getCurrentLoginUser();
-        $page = $user->repository->getPageByName($pageName);
-        $this->render('view', array('page' => $page));
+        try{
+            $user = User::getCurrentLoginUser();
+            $page = $user->repository->getPageByName($pageName);
+            $this->render('view', array('page' => $page));
+        } catch (WikiPageNotFoundException $e){
+            throw new CHttpException(404, $e->getMessage());
+        }
     }
 
     /**
