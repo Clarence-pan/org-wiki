@@ -15,7 +15,7 @@
 abstract class WikiPage extends BaseModel
 {
     public static function create($attributes){
-        $pageName = $attributes['pageName'];
+        $pageName = $attributes['name'];
         if (isset($attributes['pageType'])){
             $pageType = $attributes['pageType'];
         } else {

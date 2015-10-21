@@ -132,7 +132,7 @@ class WikiRepository extends CActiveRecord
         $self = $this;
         $pageName = $this->normalizePageName($pageName);
         $page = Lazy::init($this->_cachedPages[$pageName], function()use($self, $pageName){
-            return new WikiPage(array(
+            return WikiPage::create(array(
                 'name' => $pageName,
                 'repository' => $self
             ));
