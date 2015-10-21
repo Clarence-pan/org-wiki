@@ -25,21 +25,27 @@ class Controller extends CController
      * @return string|void
      */
     public function createUrl($route,$params=array(),$ampersand='&'){
-        $buildQuery = function($params){
-            return $params ? '?'.http_build_query($params) : '';
-        };
         if ($route == '/site/index'){
-            return '/index.php' . $buildQuery($params);
+            return '/index.php' . self::buildQuery($params);
         } elseif ($route == '/wiki/view' && $params['pageName']){
             $pageName = $params['pageName'];
             unset($params['pageName']);
-            return '/'.$pageName.WikiPage::getFileExtension().$buildQuery($params);
+            return '/wiki/'.$pageName.self::buildQuery($params);
         } elseif ($route == '/wiki/index'){
-            return '/list'.$buildQuery($params);
+            return '/list'.self::buildQuery($params);
         } elseif ($route == '/site/page' && $params['view']){
             return '/page/'.$params['view'];
         }
 
         return parent::createUrl($route, $params, $ampersand);
+    }
+
+    /**
+     * build query with params
+     * @param $params array
+     * @return string
+     */
+    public static function buildQuery($params){
+        return $params ? '?'.http_build_query($params) : '';
     }
 }

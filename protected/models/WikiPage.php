@@ -79,14 +79,14 @@ class WikiPage extends BaseModel
      * @return string 获取文件的路径，包括后缀名
      */
     public function getPath(){
-        return Utils::concatPath($this->repository->path, $this->name.self::getFileExtension());
+        return Utils::concatPath($this->repository->path, $this->name);
     }
 
     /**
      * @return string html缓存的路径
      */
     public function getHtmlCachePath(){
-        return Utils::concatPath($this->repository->htmlCachePath, $this->name.self::getFileExtension().'.html');
+        return Utils::concatPath($this->repository->htmlCachePath, $this->name.'.html');
     }
 
     /**

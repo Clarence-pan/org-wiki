@@ -114,13 +114,9 @@ class WikiRepository extends CActiveRecord
         $self = $this;
         return Lazy::init($this->_pages, function() use ($self){
             $pages = array();
-            $files = scandir($self->path);
-            $pageExtension = WikiPage::getFileExtension();
 
-            foreach ($files as $file){
-                if (String::from($file)->endWith($pageExtension)){
-                    $pages[] = $self->getPageByName(String::from($file)->cutTail($pageExtension));
-                }
+            foreach (FileFinder::find($self->path, ['fileExt' => WikiRepository::getAvailableFileTypes()]) as $file){
+                $pages[] = $self->getPageByName($file);
             }
 
             return $pages;
