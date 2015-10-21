@@ -22,6 +22,6 @@ $clientScript->registerScriptFile('/js/json-viewer.js');
 </div>
 <script>
     $(function(){
-        $('#wiki-content').find('h1,h2,h3,h4,h5,h6').initExpander();
+        $('#wiki-content').find('h1,h2,h3,h4,h5,h6').initExpander(true);
     });
 </script>
