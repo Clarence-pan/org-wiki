@@ -30,9 +30,9 @@ class SiteController extends Controller
         $user = User::getCurrentLoginUser();
 
         if ($user){
-            $this->redirect('/wiki/view', array('pageName' => 'index'));
+            $this->redirect(['/wiki/view', ['pageName' => 'index']]);
         } else {
-            $this->redirect('/site/login');
+            $this->redirect(['/site/login']);
         }
 	}
 
