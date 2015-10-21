@@ -48,4 +48,5 @@ class Controller extends CController
     public static function buildQuery($params){
         return $params ? '?'.http_build_query($params) : '';
     }
+
 }
