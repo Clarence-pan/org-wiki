@@ -17,9 +17,10 @@ $clientScript->registerScriptFile('/static/js/jquery.js');
 $clientScript->registerScriptFile('/static/js/jquery.expander.js');
 $clientScript->registerScriptFile('/static/js/jquery.button.js');
 
-$clientScript->registerScriptFile('/static/syntaxhighlighter/scripts/shCore.js');
 $clientScript->registerCssFile('/static/syntaxhighlighter/styles/shCore.css', CClientScript::POS_HEAD);
 $clientScript->registerCssFile('/static/syntaxhighlighter/styles/shThemeDefault.css', CClientScript::POS_HEAD);
+
+$clientScript->registerScriptFile('/static/syntaxhighlighter/scripts/shCore.js');
 
 foreach ($page->getCodeBlockTypes() as $lang) {
     $lang = ucfirst($lang);
