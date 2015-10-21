@@ -18,7 +18,7 @@ class FileFinder {
                 continue;
             }
 
-            if (is_dir($file)){
+            if (is_dir($path . DIRECTORY_SEPARATOR . $file)){
                 if (!empty($ignoreDir) && in_array($file, $ignoreDir)){
                     continue;
                 } else {
