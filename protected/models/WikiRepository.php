@@ -116,7 +116,7 @@ class WikiRepository extends CActiveRecord
             $pages = array();
 
             foreach (FileFinder::find($self->path, ['fileExt' => WikiRepository::getAvailableFileTypes()]) as $file){
-                $pages[] = $self->getPageByName($file);
+                $pages[] = $self->getPageByName($file, false);
             }
 
             return $pages;
