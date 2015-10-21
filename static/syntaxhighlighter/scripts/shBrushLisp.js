@@ -1,6 +1,6 @@
 SyntaxHighlighter.brushes.Lisp = function(){
 
-    var funcs     = 'lambda list progn mapcar car cdr reverse member append format';
+    var funcs     = 'lambda list progn mapcar car cdr reverse member append format interactive';
     var keywords  = 'let while unless cond if eq t nil defvar dotimes setf listp numberp not equal';
     var macros    = 'loop when dolist dotimes defun';
     var operators = '> < + - = * / %';
