@@ -40,7 +40,7 @@ return array(
             'showScriptName' => false,
 			'rules'=>array(
                 'list' => 'wiki/index',
-                '<pageName:.+>\.org' => 'wiki/view',
+                'wiki/<pageName:.+\.(org|md|htm|html|txt|png|jpg|jpeg|bmp|gif)>' => 'wiki/view',
                 'page/<view:\w+>' => 'site/page',
                 '<action:\w+>' => 'site/<action>',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
