@@ -28,7 +28,12 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
         $user = User::getCurrentLoginUser();
-		$this->render('index', array('user' => $user));
+
+        if ($user){
+            $this->redirect('/wiki/view', array('pageName' => 'index'));
+        } else {
+            $this->redirect('/site/login');
+        }
 	}
 
 	/**
