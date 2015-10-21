@@ -36,7 +36,7 @@ class OrgToHtmlRender {
                 }
 
                 $tag = 'h'.$level;
-                echo "<$tag>$head</$tag>", PHP_EOL;
+                echo "<$tag>", htmlspecialchars($head), "</$tag>", PHP_EOL;
                 echo "<div class=\"{$tag}-content\">", PHP_EOL;
                 $this->_renderHtml($level);
                 echo "</div>", PHP_EOL;
@@ -47,7 +47,7 @@ class OrgToHtmlRender {
                 prev($this->lines);
                 $this->_renderTable();
             } else {
-                echo $line, '<br/>', PHP_EOL;
+                echo htmlspecialchars($line), '<br/>', PHP_EOL;
             }
         }
     }
@@ -131,13 +131,13 @@ class OrgToHtmlRender {
     private function replaceLinks($line){
         $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\]~', function($matches){
             $link = $matches['link'];
-            $text = $matches['link'];
+            $text = htmlspecialchars($matches['link']);
             return "<a href=\"$link\">$text</a>";
         }, $line);
 
         $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\[(?<text>[^\]]+)\]\]~', function($matches){
             $link = $matches['link'];
-            $text = $matches['text'] ? $matches['text'] : $matches['link'];
+            $text = htmlspecialchars($matches['text'] ? $matches['text'] : $matches['link']);
             return "<a href=\"$link\">$text</a>";
         }, $line);
 
