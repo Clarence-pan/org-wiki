@@ -43,11 +43,30 @@ class OrgToHtmlRender {
             } else if (preg_match('/^\s*\#\+BEGIN_(\w+)(?:\s+(\w+))?/', $line, $matches)){
                 list($all, $blockType, $langType) = $matches;
                 $this->_renderBlock($blockType, $langType);
+            } else if ($line[0] == '|'){
+                prev($line);
+                $this->_renderTable();
             } else {
                 echo $line, '<br/>', PHP_EOL;
             }
         }
     }
+
+
+    private function _renderTable(){
+        echo "<table>", PHP_EOL;
+
+        while (($line = next($this->lines)) !== false){
+            echo "<tr>";
+            foreach (explode('|', rtrim($line)) as $td) {
+                echo "<td>", $td, "</td>";
+            }
+            echo "</tr>";
+        }
+
+        echo "</table>", PHP_EOL;
+    }
+
 
     private function _renderBlock($blockType, $langType){
         $blockType = strtolower($blockType);
