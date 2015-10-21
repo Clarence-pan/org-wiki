@@ -21,8 +21,6 @@ $clientScript->registerScriptFile('/js/json-viewer.js');
     <?php  echo $page->htmlContent; ?>
 </div>
 
-<div id="padding" style="display:block; height: 100vh">  </div>
-
 <script>
     $(function(){
         $('#wiki-content').find('h1,h2,h3,h4,h5,h6').initExpander(true);

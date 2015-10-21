@@ -19,3 +19,7 @@ h5{
 h6{
     margin-left: 10rem;
 }
+
+html{
+    padding-bottom: 100vh;
+}
