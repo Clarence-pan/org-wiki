@@ -62,6 +62,10 @@ class OrgToHtmlRender {
                 break;
             }
 
+            if (preg_match('/^\|(\s|[|+-])+/', $line)){
+                continue;
+            }
+
             echo "<tr>";
             foreach (explode('|', rtrim($line)) as $td) {
                 echo "<td>", $td, "</td>";
