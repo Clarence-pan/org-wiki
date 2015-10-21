@@ -16,8 +16,10 @@ $clientScript->registerCssFile('/static/css/org-wiki.css');
 $clientScript->registerScriptFile('/static/js/jquery.js');
 $clientScript->registerScriptFile('/static/js/jquery.expander.js');
 $clientScript->registerScriptFile('/static/js/jquery.button.js');
+
 $clientScript->registerScriptFile('/static/syntaxhighlighter/scripts/shCore.js');
 $clientScript->registerScriptFile('/static/syntaxhighlighter/styles/shCore.css');
+$clientScript->registerScriptFile('/static/syntaxhighlighter/styles/shThemeDefault.css');
 ?>
 
 <div id="wiki-content">
