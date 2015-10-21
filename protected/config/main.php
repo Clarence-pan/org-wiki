@@ -3,6 +3,8 @@
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
+define('WIKI_AVAILABLE_FILE_TYPES', 'org|md|htm|html|txt|png|jpg|jpeg|bmp|gif');
+
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
@@ -16,6 +18,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+        'application.exceptions.*',
 	),
 
 	'modules'=>array(
@@ -40,7 +43,7 @@ return array(
             'showScriptName' => false,
 			'rules'=>array(
                 'list' => 'wiki/index',
-                'wiki/<pageName:.+\.(org|md|htm|html|txt|png|jpg|jpeg|bmp|gif)>' => 'wiki/view',
+                sprintf('wiki/<pageName:.+\.(%s)>', WIKI_AVAILABLE_FILE_TYPES) => 'wiki/view',
                 'page/<view:\w+>' => 'site/page',
                 '<action:\w+>' => 'site/<action>',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',

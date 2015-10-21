@@ -133,6 +133,7 @@ class WikiRepository extends CActiveRecord
      */
     public function getPageByName($pageName){
         $self = $this;
+        $pageName = $this->getPageFullName($pageName);
         $r = Lazy::init($this->_cachedPages[$pageName], function()use($self, $pageName){
             return new WikiPage(array(
                 'name' => $pageName,
@@ -149,6 +150,37 @@ class WikiRepository extends CActiveRecord
         return $this->getPageByName('index');
     }
 
+    /**
+     * @param $pageName string
+     * @return string
+     */
+    public function getPageFullName($pageName){
+        $filePath = Utils::concatPath($this->path, $pageName);
+        if (is_file($filePath)){
+            return $pageName;
+        }
+
+        $fileTypeList = self::getAvailableFileTypes();
+
+        foreach ($fileTypeList as $fileType) {
+            if (is_file($filePath . '.' . $fileType)){
+                return $pageName . '.' . $fileType;
+            }
+        }
+
+        throw new WikiPageNotFoundException($this->path, $pageName);
+    }
+
+    /**
+     * @return array 所有支持的文件类型
+     */
+    public static function getAvailableFileTypes(){
+        return Lazy::init(self::$_supportedPageFileTypes, function(){
+            return explode('|', WIKI_AVAILABLE_FILE_TYPES);
+        });
+    }
+
+    private static $_supportedPageFileTypes;
     private $_owner;
     private $_pages;
     private $_cachedPages = array();
