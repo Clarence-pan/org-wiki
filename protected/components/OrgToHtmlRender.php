@@ -55,6 +55,7 @@ class OrgToHtmlRender {
 
     private function _renderTable(){
         echo "<table>", PHP_EOL;
+        $isTableHead = true;
 
         while (($line = next($this->lines)) !== false){
             if ($line[0] != '|'){
@@ -67,8 +68,16 @@ class OrgToHtmlRender {
             }
 
             echo "<tr>";
-            foreach (explode('|', rtrim($line)) as $td) {
-                echo "<td>", $td, "</td>";
+            if ($isTableHead){
+                foreach (explode('|', rtrim($line)) as $td) {
+                    echo "<th>", $td, "</th>";
+                }
+
+                $isTableHead = false;
+            } else {
+                foreach (explode('|', rtrim($line)) as $td) {
+                    echo "<td>", $td, "</td>";
+                }
             }
             echo "</tr>";
         }
