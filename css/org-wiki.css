@@ -14,6 +14,15 @@
     border: none;
 }
 
+.wiki-page h1:before,
+.wiki-page h2:before,
+.wiki-page h3:before,
+.wiki-page h4:before,
+.wiki-page h5:before,
+.wiki-page h6:before{
+    content: '*';
+}
+
 .wiki-page h1{
     font-weight: bolder;
 }
