@@ -21,7 +21,6 @@
 .wiki-page h5:before,
 .wiki-page h6:before{
     content: '* ';
-    text-decoration: none !important;
 }
 
 .wiki-page h1{
