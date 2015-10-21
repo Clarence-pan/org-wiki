@@ -62,7 +62,7 @@ class OrgToHtmlRender {
                 break;
             }
 
-            if (preg_match('/^\|(\s|[|+-])+/', $line)){
+            if (preg_match('/^\|(\s|[|+-])+$/', $line)){
                 continue;
             }
 
