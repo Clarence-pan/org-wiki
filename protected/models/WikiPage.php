@@ -12,8 +12,24 @@
  * @property WikiRepository repository
  * @property User owner
  */
-class WikiPage extends BaseModel
+abstract class WikiPage extends BaseModel
 {
+    public static function create($attributes){
+        $pageName = $attributes['pageName'];
+        if (isset($attributes['pageType'])){
+            $pageType = $attributes['pageType'];
+        } else {
+            $pageType = Utils::getFileExt($pageName);
+        }
+
+        $class = ucfirst($pageType) . 'WikiPage';
+        if (!class_exists($class)){
+            throw new WikiPageTypeNotSupportedException($pageType, $pageName);
+        }
+
+        return new $class($attributes);
+    }
+
     /**
      * @return User
      */
@@ -90,7 +106,17 @@ class WikiPage extends BaseModel
      * @return string
      */
     public function getTitle() {
-        return $this->_title;
+        return Lazy::init($this->_title, function (){
+            $textContent = $this->getTextContent();
+            foreach (explode("\n", $textContent) as $line) {
+                $line = trim($line);
+                if ($line[0] != '#'){
+                    return ltrim($line, '*');
+                }
+            }
+
+            return null;
+        });
     }
 
     /**
