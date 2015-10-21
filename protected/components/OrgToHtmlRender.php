@@ -20,13 +20,15 @@ class OrgToHtmlRender {
 
         $html = ob_get_contents();
         ob_end_clean();
+
+        $html = $this->replaceLinks($html);
+
         return '<div class="wiki-page">'.$html.'</div>';
     }
 
     private function _renderHtml($parentLevel=0){
         while(($line = next($this->lines)) !== false){
             $this->log($line);
-            $line = $this->replaceLinks($line);
             if (preg_match('/^(\*+) (.*)$/', $line, $matches)){
                 list($all, $prefix, $head) = $matches;
                 $level = strlen($prefix);
@@ -130,14 +132,14 @@ class OrgToHtmlRender {
 
     private function replaceLinks($line){
         $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\]~', function($matches){
-            $link = $matches['link'];
-            $text = htmlspecialchars($matches['link']);
+            $link = htmlspecialchars_decode($matches['link']);
+            $text = $matches['link'];
             return "<a href=\"$link\">$text</a>";
         }, $line);
 
         $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\[(?<text>[^\]]+)\]\]~', function($matches){
-            $link = $matches['link'];
-            $text = htmlspecialchars($matches['text'] ? $matches['text'] : $matches['link']);
+            $link = htmlspecialchars_decode($matches['link']);
+            $text = $matches['text'] ? $matches['text'] : $matches['link'];
             return "<a href=\"$link\">$text</a>";
         }, $line);
 
