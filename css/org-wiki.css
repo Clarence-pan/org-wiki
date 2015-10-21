@@ -1,24 +1,20 @@
-h1,h2,h3,h4,h5,h6{
+.wiki-page h1, .wiki-page .h1-content,
+.wiki-page h2, .wiki-page .h2-content,
+.wiki-page h3, .wiki-page .h3-content,
+.wiki-page h4, .wiki-page .h4-content,
+.wiki-page h5, .wiki-page .h5-content,
+.wiki-page h6, .wiki-page .h6-content
+{
     font-size: 1rem;
-}
-
-h1, .h1-content{
-    margin-left: 0;
-}
-h2, .h2-content{
     margin-left: 2rem;
 }
-h3, .h3-content{
-    margin-left: 4rem;
+
+.wiki-page h1{
+    font-weight: bolder;
 }
-h4, .h4-content{
-    margin-left: 6rem;
-}
-h5, .h5-content{
-    margin-left: 8rem;
-}
-h6, .h6-content{
-    margin-left: 10rem;
+.wiki-page h2,
+.wiki-page h3{
+    font-weight: bold;
 }
 
 html{

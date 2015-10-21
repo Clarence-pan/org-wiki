@@ -20,7 +20,7 @@ class OrgToHtmlRender {
 
         $html = ob_get_contents();
         ob_end_clean();
-        return $html;
+        return '<div class="wiki-page">'.$html.'</div>';
     }
 
     private function _renderHtml($parentLevel=0){
