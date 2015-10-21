@@ -20,10 +20,18 @@ $clientScript->registerScriptFile('/static/js/jquery.button.js');
 $clientScript->registerScriptFile('/static/syntaxhighlighter/scripts/shCore.js');
 $clientScript->registerScriptFile('/static/syntaxhighlighter/styles/shCore.css');
 $clientScript->registerScriptFile('/static/syntaxhighlighter/styles/shThemeDefault.css');
+
+foreach ($page->getCodeBlockTypes() as $lang) {
+    $lang = ucfirst($lang);
+    $clientScript->registerScriptFile("/static/syntaxhighlighter/scripts/shBrush{$lang}.js");
+}
+
+
+
 ?>
 
 <div id="wiki-content">
-    <?php  echo $page->htmlContent; ?>
+    <?php echo $page->htmlContent; ?>
 </div>
 
 <script>

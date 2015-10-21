@@ -147,6 +147,17 @@ abstract class WikiPage extends BaseModel
         return $this->_name;
     }
 
+    /**
+     * @return array 获取代码段的类型
+     */
+    public function getCodeBlockTypes(){
+        if (preg_match_all('/<pre\s+class="brush:\s+(?<lang>\w+)"/', $this->htmlContent, $matches)){
+            return array_unique((array)$matches['lang']);
+        }
+
+        return [];
+    }
+
     private $_name;
     private $_title;
     private $_textContent;
