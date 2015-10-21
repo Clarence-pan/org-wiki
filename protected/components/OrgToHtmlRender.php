@@ -52,14 +52,12 @@ class OrgToHtmlRender {
     private function _renderBlock($blockType, $langType){
         $blockType = strtolower($blockType);
         if ($blockType == 'src'){
-            echo '<pre>', PHP_EOL;
-            echo "<code class=\"$langType\">", PHP_EOL;
+            echo sprintf('<pre class="brush: %s">', $langType), PHP_EOL;
         }
 
         $this->_renderBlockContent($blockType);
 
         if ($blockType == 'src'){
-            echo "</code>", PHP_EOL;
             echo '</pre>', PHP_EOL;
         }
     }

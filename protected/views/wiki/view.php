@@ -11,11 +11,13 @@ $this->pageTitle = $page->title . ' - Wiki';
  */
 $clientScript = Yii::app()->clientScript;
 
-$clientScript->registerCssFile('/css/jquery.expander.css');
-$clientScript->registerCssFile('/css/org-wiki.css');
-$clientScript->registerScriptFile('/js/jquery.js');
-$clientScript->registerScriptFile('/js/jquery.expander.js');
-$clientScript->registerScriptFile('/js/jquery.button.js');
+$clientScript->registerCssFile('/static/css/jquery.expander.css');
+$clientScript->registerCssFile('/static/css/org-wiki.css');
+$clientScript->registerScriptFile('/static/js/jquery.js');
+$clientScript->registerScriptFile('/static/js/jquery.expander.js');
+$clientScript->registerScriptFile('/static/js/jquery.button.js');
+$clientScript->registerScriptFile('/static/syntaxhighlighter/scripts/shCore.js');
+$clientScript->registerScriptFile('/static/syntaxhighlighter/styles/shCore.css');
 ?>
 
 <div id="wiki-content">
@@ -54,4 +56,8 @@ $clientScript->registerScriptFile('/js/jquery.button.js');
             return false;
         });
     });
+</script>
+
+<script>
+    SyntaxHighlighter.all();
 </script>
