@@ -44,7 +44,7 @@ class OrgToHtmlRender {
                 list($all, $blockType, $langType) = $matches;
                 $this->_renderBlock($blockType, $langType);
             } else if ($line[0] == '|'){
-                prev($line);
+                prev($this->lines);
                 $this->_renderTable();
             } else {
                 echo $line, '<br/>', PHP_EOL;
@@ -57,6 +57,11 @@ class OrgToHtmlRender {
         echo "<table>", PHP_EOL;
 
         while (($line = next($this->lines)) !== false){
+            if ($line[0] != '|'){
+                prev($this->lines);
+                break;
+            }
+
             echo "<tr>";
             foreach (explode('|', rtrim($line)) as $td) {
                 echo "<td>", $td, "</td>";
