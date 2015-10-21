@@ -1,0 +1,12 @@
+.expander{
+    cursor: pointer;
+}
+.expander:hover{
+    text-decoration: underline;
+}
+.expander:after{
+    content: '...';
+}
+.expander.expanded:after{
+    content: '';
+}
