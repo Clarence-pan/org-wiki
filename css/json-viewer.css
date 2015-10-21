@@ -89,6 +89,7 @@
 .icon{
     display: inline-block;
 }
+
 .icon-expander{
     display: inline-block;
     border-width: 5px;
@@ -104,6 +105,10 @@
     top: 5px;
     left: -2px;
     border-color: #000000 transparent transparent transparent;
+    visibility: hidden;
+}
+.expanded:hover .icon-expander{
+    visibility: visible;
 }
 
 dl.json-viewer .icon-expander{
