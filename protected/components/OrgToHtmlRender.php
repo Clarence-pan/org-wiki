@@ -82,7 +82,7 @@ class OrgToHtmlRender {
             foreach ($tr as $td) {
                 echo "<th>", htmlspecialchars($td), "</th>";
             }
-            echo "</tr>";
+            echo "</tr>", PHP_EOL;
         }
 
         foreach ($tbody as $tr) {
@@ -90,7 +90,7 @@ class OrgToHtmlRender {
             foreach ($tr as $td) {
                 echo "<td>", htmlspecialchars($td), "</td>";
             }
-            echo "</tr>";
+            echo "</tr>", PHP_EOL;
         }
 
         echo "</table>", PHP_EOL;
