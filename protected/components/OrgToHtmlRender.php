@@ -21,6 +21,7 @@ class OrgToHtmlRender {
         $html = ob_get_contents();
         ob_end_clean();
 
+        $html = $this->replaceFonts($html);
         $html = $this->replaceLinks($html);
 
         return '<div class="wiki-page">'.$html.'</div>';
@@ -125,6 +126,34 @@ class OrgToHtmlRender {
                 echo $line, PHP_EOL;
             }
         }
+    }
+
+    private function replaceFonts($text){
+        $text = preg_replace_callback('~\s+\*(?<text>\w+)\*\s+~', function($matches){
+            $text = $matches['text'];
+            return "<strong>{$text}</strong>";
+        }, $text);
+
+        $text = preg_replace_callback('~\s+/(?<text>\w+)/\s+~', function($matches){
+            $text = $matches['text'];
+            return "<i>{$text}</i>";
+        }, $text);
+
+        $text = preg_replace_callback('~\s+_(?<text>\w+)_\s+~', function($matches){
+            $text = $matches['text'];
+            return "<span class=\"underline\">{$text}</span>";
+        }, $text);
+
+        $text = preg_replace_callback('~\s+=(?<text>\w+)=\s+~', function($matches){
+            $text = $matches['text'];
+            return "<span class=\"mono\">{$text}</span>";
+        }, $text);
+
+        $text = preg_replace_callback('/\s+~(?<text>\w+)~\s+/', function($matches){
+            $text = $matches['text'];
+            return "<span class=\"mono\">{$text}</span>";
+        }, $text);
+        return $text;
     }
 
     private function replaceLinks($line){
