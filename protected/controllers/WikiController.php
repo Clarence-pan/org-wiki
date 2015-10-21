@@ -29,7 +29,7 @@ class WikiController extends Controller {
             $user = User::getCurrentLoginUser();
             $page = $user->repository->getPageByName($pageName);
             $this->render('view', array('page' => $page));
-        } catch (WikiPageNotFoundException $e){
+        } catch (NotFoundException $e){
             throw new CHttpException(404, $e->getMessage());
         }
     }
