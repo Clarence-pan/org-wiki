@@ -20,7 +20,8 @@
 .wiki-page h4:before,
 .wiki-page h5:before,
 .wiki-page h6:before{
-    content: '*';
+    content: '* ';
+    text-decoration: none !important;
 }
 
 .wiki-page h1{
