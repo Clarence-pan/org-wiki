@@ -28,7 +28,7 @@ class FileFinder {
                 }
             }
 
-            if (!empty($fileExt) && !in_array(end(explode('.', $file)), (array)$fileExt)){
+            if (!empty($fileExt) && !in_array(Utils::getFileExt($file), (array)$fileExt)){
                 continue;
             }
 
