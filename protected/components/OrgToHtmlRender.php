@@ -37,7 +37,7 @@ class OrgToHtmlRender {
 
                 $tag = 'h'.$level;
                 echo "<$tag>$head</$tag>", PHP_EOL;
-                echo "<div>", PHP_EOL;
+                echo "<div class=\"{$tag}-content\">", PHP_EOL;
                 $this->_renderHtml($level);
                 echo "</div>", PHP_EOL;
             } else if (preg_match('/^\s*\#\+BEGIN_(\w+)(?:\s+(\w+))?/', $line, $matches)){
