@@ -29,6 +29,7 @@ class OrgToHtmlRender {
     private function _renderHtml($parentLevel=0){
         while(($line = next($this->lines)) !== false){
             $this->log($line);
+
             if (preg_match('/^(\*+) (.*)$/', $line, $matches)){
                 list($all, $prefix, $head) = $matches;
                 $level = strlen($prefix);
@@ -37,14 +38,7 @@ class OrgToHtmlRender {
                     return;
                 }
 
-                $head = trim($head);
-                $this->titleList[] = $head;
-
-                $tag = 'h'.$level;
-                echo "<$tag>", htmlspecialchars($head), "</$tag>", PHP_EOL;
-                echo "<div class=\"{$tag}-content\">", PHP_EOL;
-                $this->_renderHtml($level);
-                echo "</div>", PHP_EOL;
+                $this->_renderTitle($head, $level);
             } else if (preg_match('/^\s*\#\+BEGIN_(\w+)(?:\s+(\w+))?/', $line, $matches)){
                 list($all, $blockType, $langType) = $matches;
                 $this->_renderBlock($blockType, $langType);
@@ -137,7 +131,7 @@ class OrgToHtmlRender {
         $anchorList = $this->titleList;
         $line = preg_replace_callback('~#&lt;&lt;(?<anchor>.*)&gt;&gt;~', function($matches) use (&$anchorList){
             $anchorText = $matches['anchor'];
-            $anchorId = htmlspecialchars_decode($anchorText);
+            $anchorId = addslashes(htmlspecialchars_decode($anchorText));
             $anchorList[] = $anchorId;
             return "<span id=\"{$anchorId}\">{$anchorText}</span>";
         }, $line);
@@ -165,9 +159,27 @@ class OrgToHtmlRender {
         return $line;
     }
 
+    /**
+     * @param $head
+     * @param $level
+     */
+    private function _renderTitle($head, $level) {
+        $head = trim($head);
+        $this->titleList[] = $head;
+
+        $tag = 'h' . $level;
+        $id = addslashes(htmlspecialchars($head));
+
+        echo "<$tag id=\"{$id}\">", htmlspecialchars($head), "</$tag>", PHP_EOL;
+        echo "<div class=\"{$tag}-content\">", PHP_EOL;
+        $this->_renderHtml($level);
+        echo "</div>", PHP_EOL;
+    }
+
     private function log($msg){
         #echo '<!--  ', $msg, ' -->', PHP_EOL;
     }
     private $lines;
     private $titleList = [];
-} 
+
+}
