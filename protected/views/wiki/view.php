@@ -4,6 +4,7 @@
  * @var $page WikiPage
  */
 
+$this->pageTitle = $page->title . ' - Wiki';
 
 /**
  * @var CClientScript $clientScript
