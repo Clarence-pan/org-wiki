@@ -37,6 +37,9 @@ class OrgToHtmlRender {
                     return;
                 }
 
+                $head = trim($head);
+                $this->titleList[] = $head;
+
                 $tag = 'h'.$level;
                 echo "<$tag>", htmlspecialchars($head), "</$tag>", PHP_EOL;
                 echo "<div class=\"{$tag}-content\">", PHP_EOL;
@@ -131,7 +134,7 @@ class OrgToHtmlRender {
     }
 
     private function replaceLinks($line){
-        $anchorList = [];
+        $anchorList = $this->titleList;
         $line = preg_replace_callback('~#&lt;&lt;(?<anchor>.*)&gt;&gt;~', function($matches) use (&$anchorList){
             $anchorText = $matches['anchor'];
             $anchorId = htmlspecialchars_decode($anchorText);
@@ -140,7 +143,7 @@ class OrgToHtmlRender {
         }, $line);
 
         $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\]~', function($matches) use($anchorList){
-            $link = htmlspecialchars_decode($matches['link']);
+            $link = trim(htmlspecialchars_decode($matches['link']));
             if (in_array($link, $anchorList)){
                 $link = '#'.$link;
             }
@@ -150,7 +153,7 @@ class OrgToHtmlRender {
         }, $line);
 
         $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\[(?<text>[^\]]+)\]\]~', function($matches)use($anchorList){
-            $link = htmlspecialchars_decode($matches['link']);
+            $link = trim(htmlspecialchars_decode($matches['link']));
             if (in_array($link, $anchorList)){
                 $link = '#'.$link;
             }
@@ -166,4 +169,5 @@ class OrgToHtmlRender {
         #echo '<!--  ', $msg, ' -->', PHP_EOL;
     }
     private $lines;
+    private $titleList = [];
 } 
