@@ -24,4 +24,14 @@ abstract class Utils
         return '';
     }
 
+
+    /**
+     * @param $dir string
+     */
+    public static function mkdirIfNotExists($dir){
+        if (!is_dir($dir)){
+            mkdir($dir, 0777, true);
+        }
+    }
+
 } 

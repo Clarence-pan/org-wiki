@@ -32,36 +32,19 @@ class WikiPage extends BaseModel
     }
 
     /**
-     * 转换为HTML
-     * @return string
-     * @throws CmdExecutionFailException
+     * @return string html
      */
-    public function toHtmlByPandoc(){
-        if (!file_exists($this->htmlCachePath) or filemtime($this->htmlCachePath) < filemtime($this->path)){
-            $cmd = sprintf('pandoc -f org -t html "%s" -o "%s"', $this->path, $this->htmlCachePath);
-
-            ob_start();
-            system($cmd, $ret);
-            ob_end_clean();
-
-            Yii::log("Execute ".$cmd." ==> ". $ret);
-
-            if ($ret != 0){
-                throw new CmdExecutionFailException($cmd, $ret);
-            }
-        }
-
-        return file_get_contents($this->htmlCachePath);
-    }
-
     public function toHtml(){
-        #if (file_exists($this->htmlCachePath) and filemtime($this->htmlCachePath) >= filemtime($this->path)){
-        #    return file_get_contents($this->htmlCachePath);
-        #}
+        if (WIKI_HTML_CACHE_ENABLE and file_exists($this->htmlCachePath) and filemtime($this->htmlCachePath) >= filemtime($this->path)){
+            return file_get_contents($this->htmlCachePath);
+        }
 
         $converter = new OrgToHtmlRender($this->textContent);
         $html = $converter->renderHtml();
+
+        Utils::mkdirIfNotExists(dirname($this->htmlCachePath));
         file_put_contents($this->htmlCachePath, $html);
+
         return $html;
     }
 

@@ -4,6 +4,7 @@
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
 define('WIKI_AVAILABLE_FILE_TYPES', 'org|md|htm|html|txt|png|jpg|jpeg|bmp|gif');
+define('WIKI_HTML_CACHE_ENABLE', false);
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
