@@ -6,7 +6,9 @@
 .wiki-page h6, .wiki-page .h6-content
 {
     font-size: 1rem;
-    margin-left: 2rem;
+    margin-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
 }
 
 .wiki-page h1{
