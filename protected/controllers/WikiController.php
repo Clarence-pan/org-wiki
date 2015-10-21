@@ -54,11 +54,18 @@ class WikiController extends Controller {
             throw new CHttpException(404, "Page not found");
         }
 
+        ob_start();
         $cmd = sprintf('iconv -f "%s" -t "%s" "%s"', $from, $to, $page->path);
         system($cmd, $return);
+        $converted = ob_get_contents();
+        ob_end_clean();
+
         if ($return != 0){
             throw new CHttpException(500, "Iconv failed: ".$return);
         }
+
+        file_put_contents($page->path, $converted);
+
         echo 'OK';
     }
 } 
