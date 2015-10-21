@@ -131,14 +131,30 @@ class OrgToHtmlRender {
     }
 
     private function replaceLinks($line){
-        $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\]~', function($matches){
+        $anchorList = [];
+        $line = preg_replace_callback('~#&lt;&lt;(?<anchor>.*)&gt;&gt;~', function($matches) use (&$anchorList){
+            $anchorText = $matches['anchor'];
+            $anchorId = htmlspecialchars_decode($anchorText);
+            $anchorList[] = $anchorId;
+            return "<span id=\"{$anchorId}\">{$anchorText}</span>";
+        }, $line);
+
+        $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\]~', function($matches) use($anchorList){
             $link = htmlspecialchars_decode($matches['link']);
+            if (in_array($link, $anchorList)){
+                $link = '#'.$link;
+            }
+
             $text = $matches['link'];
             return "<a href=\"$link\">$text</a>";
         }, $line);
 
-        $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\[(?<text>[^\]]+)\]\]~', function($matches){
+        $line = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\[(?<text>[^\]]+)\]\]~', function($matches)use($anchorList){
             $link = htmlspecialchars_decode($matches['link']);
+            if (in_array($link, $anchorList)){
+                $link = '#'.$link;
+            }
+
             $text = $matches['text'] ? $matches['text'] : $matches['link'];
             return "<a href=\"$link\">$text</a>";
         }, $line);
