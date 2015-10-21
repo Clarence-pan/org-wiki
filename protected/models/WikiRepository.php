@@ -125,18 +125,33 @@ class WikiRepository extends CActiveRecord
 
     /**
      * @param $pageName
+     * @param bool $ensureExists
      * @return WikiPage
      */
-    public function getPageByName($pageName){
+    public function getPageByName($pageName, $ensureExists=true){
         $self = $this;
-        $pageName = $this->getPageFullName($pageName);
-        $r = Lazy::init($this->_cachedPages[$pageName], function()use($self, $pageName){
+        $pageName = $this->normalizePageName($pageName);
+        $page = Lazy::init($this->_cachedPages[$pageName], function()use($self, $pageName){
             return new WikiPage(array(
                 'name' => $pageName,
                 'repository' => $self
             ));
         });
-        return $r;
+
+        if ($ensureExists){
+            $pageRealPath = realpath($page->path);
+            if (!$pageRealPath || !file_exists($pageRealPath)){
+                throw new WikiPageNotFoundException($pageName, $this->path);
+            }
+
+            // ensure page's path should start with repo's path
+            $repoRealPath = realpath($this->path);
+            if (!$repoRealPath || strncmp($repoRealPath, $pageRealPath, strlen($repoRealPath)) != 0){
+                throw new WikiPageNotFoundException($pageName, $this->path);
+            }
+        }
+
+        return $page;
     }
 
     /**
@@ -150,7 +165,9 @@ class WikiRepository extends CActiveRecord
      * @param $pageName string
      * @return string
      */
-    public function getPageFullName($pageName){
+    public function normalizePageName($pageName){
+        $pageName = Utils::normalizePath($pageName);
+
         $filePath = Utils::concatPath($this->path, $pageName);
         if (is_file($filePath)){
             return $pageName;
