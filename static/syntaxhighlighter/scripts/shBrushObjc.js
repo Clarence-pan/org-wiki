@@ -42,8 +42,8 @@ SyntaxHighlighter.brushes.Objc = function()
         { regex: SyntaxHighlighter.regexLib.DoubleQuotedString,                                     css: 'string' },                        // strings
         { regex: SyntaxHighlighter.regexLib.SingleQuotedString,                                     css: 'string' },                        // strings
         { regex: new RegExp('^ *#.*', 'gm'),                                            css: 'preprocessor' },
-        { regex: new RegExp(this.GetKeywords(datatypes), 'gm'),         css: 'datatypes' },
-        { regex: new RegExp(this.GetKeywords(keywords), 'gm'),          css: 'keyword' },
+        { regex: new RegExp(this.getKeywords(datatypes), 'gm'),         css: 'datatypes' },
+        { regex: new RegExp(this.getKeywords(keywords), 'gm'),          css: 'keyword' },
         { regex: new RegExp('\\bNS\\w+\\b', 'g'),                                       css: 'keyword' },
         { regex: new RegExp('@\\w+\\b', 'g'),                                           css: 'keyword' }
     ];
