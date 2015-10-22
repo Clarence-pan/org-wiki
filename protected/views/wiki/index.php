@@ -67,7 +67,12 @@ echo "</ul>";
 
 
         function openWikiPage(pageUrl){
-            pageUrl && $("<iframe class='wiki-page-container'></iframe>").attr('src', pageUrl).appendTo('#allWiki');
+            if (!pageUrl){
+                return;
+            }
+
+            $("<h1></h1>").append($("<a></a>").text(pageUrl).attr("href", pageUrl)).appendTo('#allWiki');
+            $("<iframe class='wiki-page-container'></iframe>").attr('src', pageUrl).appendTo('#allWiki');
         }
     });
 
