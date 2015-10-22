@@ -4,6 +4,7 @@
 namespace html\parser\org;
 
 
+use html\dom\CodeBlockElement;
 use html\dom\DivElement;
 use html\dom\TextElement;
 
