@@ -13,7 +13,6 @@ use html\dom\RawHtmlElement;
 use html\dom\TextElement;
 
 class Parser {
-
     public function parse($text){
         $initialMemBytes = memory_get_usage();
 
@@ -186,8 +185,7 @@ class Parser {
                 $link = '#'.$link;
             }
 
-            $text = $matches['link'];
-            return "<a href=\"$link\">$text</a>";
+            return $this->createLink($link, null);
         }, $text);
 
         $text = preg_replace_callback('~\[\[(?<link>[^\]]+)\]\[(?<text>[^\]]+)\]\]~', function($matches)use($anchorList){
@@ -197,13 +195,53 @@ class Parser {
             }
 
             $text = $matches['text'] ? $matches['text'] : $matches['link'];
-            return "<a href=\"$link\">$text</a>";
+            return $this->createLink($link, $text);
         }, $text);
 
 
         return new RawHtmlElement($text);
     }
 
+    /**
+     * 创建一个链接
+     * @param $url
+     * @param $text
+     * @return mixed|string
+     */
+    public function createLink($url, $text){
+        if (preg_match('/\.(jpg|jpeg|png|gif|bmp)$/', $url)){
+            $link = Html::createElement('a', [
+                'href' => $url,
+                'children' => [
+                    Html::createElement('img', [
+                        'src' => $url,
+                        'alt' => $text ? $text : null,
+                        'title' => $text ? $text : null
+                    ])
+                ]
+            ])->toHtml();
+        } else {
+            $link = Html::createElement('a', [
+                'href' => $url,
+                'children' => $text ? [ $this->createText($text) ] : []
+            ])->toHtml();
+        }
 
+        if (is_callable($this->linkHandler)){
+            return call_user_func_array($this->linkHandler, [$url, $text, $link]);
+        }
+
+        return $link;
+    }
+
+    /**
+     * @param callable $linkHandler
+     */
+    public function setLinkHandler(callable $linkHandler) {
+        $this->linkHandler = $linkHandler;
+    }
+
+
+    private $linkHandler = null;
     private $titleList = [];
 }

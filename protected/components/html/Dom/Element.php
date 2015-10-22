@@ -205,7 +205,7 @@ class Element {
     }
 
     protected function _isHtmlAttribute($name){
-        return in_array($name, ['class', 'title', 'id', 'href', 'data', 'style']);
+        return in_array($name, ['class', 'title', 'id', 'href', 'data', 'style', 'src', 'alt']);
     }
 
     protected function _getAttributesAsString(){

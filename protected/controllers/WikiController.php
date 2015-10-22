@@ -28,7 +28,11 @@ class WikiController extends Controller {
         try{
             $user = User::getCurrentLoginUser();
             $page = $user->repository->getPageByName($pageName);
-            $this->render('view', array('page' => $page));
+            if ($page instanceof ImageWikiPage){
+                $this->renderRawWikiPage($page);
+            } else {
+                $this->render('view', array('page' => $page));
+            }
         } catch (NotFoundException $e){
             throw new CHttpException(404, $e->getMessage());
         }
@@ -38,8 +42,7 @@ class WikiController extends Controller {
         try{
             $user = User::getCurrentLoginUser();
             $page = $user->repository->getPageByName($pageName);
-            header('Content-Type: '.$page->contentType);
-            readfile($page->path);
+            $this->renderRawWikiPage($page);
         } catch (NotFoundException $e){
             throw new CHttpException(404, $e->getMessage());
         }
@@ -82,5 +85,16 @@ class WikiController extends Controller {
         file_put_contents($page->path, $converted);
 
         echo 'OK';
+    }
+
+    /**
+     * render raw content of wiki page
+     * @param WikiPage $page
+     * @param bool     $end
+     */
+    public function renderRawWikiPage(WikiPage $page, $end=true){
+        header('Content-Type: '.$page->contentType);
+        readfile($page->path);
+        $end and Yii::app()->end();
     }
 } 
