@@ -16,7 +16,7 @@
  * the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-dp.sh.Brushes.Objc = function()
+SyntaxHighlighter.brushes.Objc = function()
 {
     var datatypes =
         'char bool BOOL double float int ' +
@@ -52,5 +52,5 @@ dp.sh.Brushes.Objc = function()
     this.Style =    '.dp-objc .datatypes { color: #2E8B57; font-weight: bold; }';
 }
 
-dp.sh.Brushes.Objc.prototype    = new dp.sh.Highlighter();
-dp.sh.Brushes.Objc.Aliases      = ['obj-c', 'objc'];
+SyntaxHighlighter.brushes.Objc.prototype    = new SyntaxHighlighter.Highlighter();
+SyntaxHighlighter.brushes.Objc.aliases      = ['obj-c', 'objc'];
