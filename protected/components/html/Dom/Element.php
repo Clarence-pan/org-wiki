@@ -40,22 +40,6 @@ class Element {
         return $this->_attributes[$name];
     }
 
-    public function getClass(){
-        return $this->attr('class');
-    }
-
-    public function setClass($value){
-        $this->attr('class', $value);
-    }
-
-    public function getTitle(){
-        return $this->attr('title');
-    }
-
-    public function setTitle($value){
-        $this->attr('title', $value);
-    }
-
     /**
      * @param string $name
      * @param null $value
@@ -193,6 +177,8 @@ class Element {
             return $this->{$getter}();
         } else if (property_exists($this, ($innerPropertyName = '_' . $propertyName))){
             return $this->{$innerPropertyName};
+        } else if ($this->_isHtmlAttribute($propertyName)){
+            return $this->attr($propertyName);
         }
 
         throw new InvalidPropertyException($propertyName);
@@ -204,9 +190,15 @@ class Element {
             return $this->{$setter}($value);
         } else if (property_exists($this, ($innerPropertyName = '_' . $propertyName))){
             return $this->{$innerPropertyName} = $value;
+        } else if ($this->_isHtmlAttribute($propertyName)){
+            return $this->attr($propertyName, $value);
         }
 
         throw new InvalidPropertyException($propertyName);
+    }
+
+    protected function _isHtmlAttribute($name){
+        return in_array($name, ['class', 'title', 'id', 'href', 'data', 'style']);
     }
 
     protected function _getAttributesAsString(){
