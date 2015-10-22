@@ -15,12 +15,17 @@ use html\dom\TextElement;
 class Parser {
 
     public function parse($text){
+        $initialMemBytes = memory_get_usage();
+
         $container = new DivElement(['class' => 'wiki-page']);
 
         $reader = new TextReader($text);
         $this->_process($reader, $container);
 
-        $container->add(Html::createElement('h1', ['innerText' => 'The following is raw org-mode text:']));
+        $deltaMemBytes = memory_get_usage() - $initialMemBytes;
+        $container->prepend(Html::createElement('p', ['text' => 'Memory delta: ' . $deltaMemBytes .'(bytes).']));
+
+        $container->add(Html::createElement('h1', ['text' => 'The following is raw org-mode text:']));
         $container->add(new CodeBlockElement(['lang' => 'org', 'code' => $text]));
 
         return $container;
@@ -63,18 +68,16 @@ class Parser {
         $head = trim($head);
         $this->titleList[] = $head;
 
-        $h = Html::createElement('h'.$level, [
-            'id' => $head
-        ]);
-        $h->append(self::createText($head));
-
-        $container->append($h);
+        Html::createElement('h'.$level, [
+            'id' => $head,
+            'children' => [
+                self::createText($head)
+            ]
+        ])->appendTo($container);
 
         $content = Html::createElement('div', [
             'class' => 'h'.$level.'-content'
-        ]);
-
-        $container->append($content);
+        ])->appendTo($container);
 
         $this->_process($reader, $content, $level);
     }

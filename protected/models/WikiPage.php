@@ -43,7 +43,16 @@ abstract class WikiPage extends BaseModel
     public function getHtmlContent(){
         $self = $this;
         return Lazy::init($this->_htmlContent, function() use ($self){
-           return $self->toHtml();
+            if (WIKI_HTML_CACHE_ENABLE and file_exists($this->htmlCachePath) and filemtime($this->htmlCachePath) >= filemtime($this->path)){
+                return file_get_contents($this->htmlCachePath);
+            }
+
+            $html = $self->toHtml();
+
+            Utils::mkdirIfNotExists(dirname($this->htmlCachePath));
+            file_put_contents($this->htmlCachePath, $html);
+
+            return $html;
         });
     }
 
@@ -51,18 +60,7 @@ abstract class WikiPage extends BaseModel
      * @return string html
      */
     public function toHtml(){
-        if (WIKI_HTML_CACHE_ENABLE and file_exists($this->htmlCachePath) and filemtime($this->htmlCachePath) >= filemtime($this->path)){
-            return file_get_contents($this->htmlCachePath);
-        }
-
-        $parser = new html\parser\org\Parser();
-        $dom = $parser->parse($this->textContent);
-        $html = $dom->toHtml();
-
-        Utils::mkdirIfNotExists(dirname($this->htmlCachePath));
-        file_put_contents($this->htmlCachePath, $html);
-
-        return $html;
+        throw new \html\err\NotImplementedException(__METHOD__);
     }
 
     /**
@@ -100,24 +98,14 @@ abstract class WikiPage extends BaseModel
      * @param string $title
      */
     public function setTitle($title) {
-        $this->_title = $title;
+        throw new \html\err\NotSupportedException(__METHOD__);
     }
 
     /**
      * @return string
      */
     public function getTitle() {
-        return Lazy::init($this->_title, function (){
-            $textContent = $this->getTextContent();
-            foreach (explode("\n", $textContent) as $line) {
-                $line = trim($line);
-                if ($line[0] != '#'){
-                    return ltrim($line, '*');
-                }
-            }
-
-            return null;
-        });
+        return $this->name;
     }
 
     /**
@@ -160,7 +148,6 @@ abstract class WikiPage extends BaseModel
     }
 
     private $_name;
-    private $_title;
     private $_textContent;
     private $_htmlContent;
     private $_repository;

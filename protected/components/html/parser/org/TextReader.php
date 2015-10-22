@@ -7,6 +7,7 @@ namespace html\parser\org;
 class TextReader {
     public function __construct($text){
         $this->lines = explode("\n", $text);
+        array_unshift($this->lines, '');
     }
 
     public function rewind(){
