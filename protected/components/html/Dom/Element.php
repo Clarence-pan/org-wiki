@@ -117,17 +117,24 @@ class Element {
     }
 
     public function setHtml($html){
-        throw new NotImplementedException(__METHOD__);
+        $this->clear()->append(new RawHtmlElement($html));
     }
 
     public function setText($text){
-        throw new NotImplementedException(__METHOD__);
+        $this->clear()->append(new TextElement($text));
     }
 
     public function getText(){
         throw new NotImplementedException(__METHOD__);
     }
 
+    public function setInnerText($text){
+        $this->setText($text);
+    }
+
+    public function getInnerText(){
+        throw new NotImplementedException(__METHOD__);
+    }
     /**
      * @return string Inner HTML
      * @throws \html\err\InvalidPropertyException

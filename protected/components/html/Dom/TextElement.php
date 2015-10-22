@@ -15,20 +15,20 @@ class TextElement extends Element{
     }
 
     public function getText(){
-        return implode('', $this->_children);
+        return $this->_text;
     }
 
     public function setText($text){
-        $this->_children = [ $text ];
+        $this->_text = $text;
     }
 
     public function toHtml(){
-        return self::encode($this->text);
+        return self::encode($this->_text);
     }
 
     public function add(Element $element){
         if ($element instanceof TextElement){
-            $this->_children[] = $element->text;
+            $this->_text .= $element->text;
             return $this;
         } else {
             throw new NotSupportedException("add ".get_class($element)." to text element");
@@ -46,11 +46,12 @@ class TextElement extends Element{
 
     public function prepend(Element $element){
         if ($element instanceof TextElement){
-            array_unshift($this->_children, $element->text);
+            $this->_text = $element->text . $this->_text;
             return $this;
         } else {
             throw new NotSupportedException("add ".get_class($element)." to text element");
         }
     }
 
+    private $_text;
 }

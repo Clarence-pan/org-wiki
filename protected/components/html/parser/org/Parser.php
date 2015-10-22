@@ -20,7 +20,7 @@ class Parser {
         $reader = new TextReader($text);
         $this->_process($reader, $container);
 
-        $container->add(new TextElement("This is a test! The follow are raw code:"));
+        $container->add(Html::createElement('h1', ['innerText' => 'The following is raw org-mode text:']));
         $container->add(new CodeBlockElement(['lang' => 'org', 'code' => $text]));
 
         return $container;
