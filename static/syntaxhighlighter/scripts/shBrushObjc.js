@@ -37,10 +37,10 @@ SyntaxHighlighter.brushes.Objc = function()
             'using uuid virtual volatile whcar_t while';
 
     this.regexList = [
-        { regex: SyntaxHighlighter.regexLib.SingleLineCComments,                            css: 'comment' },                       // one line comments
-        { regex: SyntaxHighlighter.regexLib.MultiLineCComments,                                     css: 'comment' },                       // multiline comments
-        { regex: SyntaxHighlighter.regexLib.DoubleQuotedString,                                     css: 'string' },                        // strings
-        { regex: SyntaxHighlighter.regexLib.SingleQuotedString,                                     css: 'string' },                        // strings
+        { regex: SyntaxHighlighter.regexLib.singleLineCComments,                            css: 'comment' },                       // one line comments
+        { regex: SyntaxHighlighter.regexLib.multiLineCComments,                                     css: 'comment' },                       // multiline comments
+        { regex: SyntaxHighlighter.regexLib.doubleQuotedString,                                     css: 'string' },                        // strings
+        { regex: SyntaxHighlighter.regexLib.singleQuotedString,                                     css: 'string' },                        // strings
         { regex: new RegExp('^ *#.*', 'gm'),                                            css: 'preprocessor' },
         { regex: new RegExp(this.getKeywords(datatypes), 'gm'),         css: 'datatypes' },
         { regex: new RegExp(this.getKeywords(keywords), 'gm'),          css: 'keyword' },
