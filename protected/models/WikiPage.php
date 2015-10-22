@@ -55,8 +55,9 @@ abstract class WikiPage extends BaseModel
             return file_get_contents($this->htmlCachePath);
         }
 
-        $converter = new OrgToHtmlRender($this->textContent);
-        $html = $converter->renderHtml();
+        $parser = html\parser\org\Parser();
+        $dom = $parser->parse($this->textContent);
+        $html = $dom->toHtml();
 
         Utils::mkdirIfNotExists(dirname($this->htmlCachePath));
         file_put_contents($this->htmlCachePath, $html);
