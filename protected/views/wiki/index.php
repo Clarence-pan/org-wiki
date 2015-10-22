@@ -46,16 +46,25 @@ echo "</ul>";
                 pageUrlList.push($(this).attr('href'));
             });
 
-            openWikiPage(pageUrlList[0]);
+            var expand = debounce(function(){
+                if (curPage < pageUrlList.length){
+                    openWikiPage(pageUrlList[curPage]);
+                    curPage += 1;
+                }
+            });
+
+            expand();
+
+            $(window).on('scroll', function(){
+                var $win = $(window);
+                if ($win.scrollTop() + $win.height() + 10 >= $('html').height()){
+                    expand();
+                }
+            });
         });
 
-        $(window).on('scroll', debounce(function(){
-            var $win = $(window);
-            if ($win.scrollTop() + $win.height() + 10 >= $('html').height()){
-                curPage += 1;
-                openWikiPage(pageUrlList[curPage]);
-            }
-        }, 1000));
+
+
 
         function openWikiPage(pageUrl){
             pageUrl && $("<iframe class='wiki-page-container'></iframe>").attr('src', pageUrl).appendTo('#allWiki');
