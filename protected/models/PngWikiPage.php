@@ -1,7 +1,7 @@
 <?php
 
 
-class PngWikiPage extends WikiPage {
+class PngWikiPage extends ImageWikiPage {
 
     public function getContentType(){
         return 'image/png';
