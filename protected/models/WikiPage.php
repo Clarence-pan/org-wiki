@@ -55,7 +55,7 @@ abstract class WikiPage extends BaseModel
             return file_get_contents($this->htmlCachePath);
         }
 
-        $parser = html\parser\org\Parser();
+        $parser = new html\parser\org\Parser();
         $dom = $parser->parse($this->textContent);
         $html = $dom->toHtml();
 
