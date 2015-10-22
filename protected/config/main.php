@@ -46,6 +46,7 @@ return array(
 			'rules'=>array(
                 'list' => 'wiki/index',
                 sprintf('wiki/<pageName:.+\.(%s)>', WIKI_AVAILABLE_FILE_TYPES) => 'wiki/view',
+                sprintf('raw/<pageName:.+\.(%s)>', WIKI_AVAILABLE_FILE_TYPES) => 'wiki/viewRaw',
                 'page/<view:\w+>' => 'site/page',
                 '<action:\w+>' => 'site/<action>',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',

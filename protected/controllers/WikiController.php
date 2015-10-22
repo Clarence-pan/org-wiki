@@ -34,6 +34,16 @@ class WikiController extends Controller {
         }
     }
 
+    public function actionViewRaw($pageName){
+        try{
+            $user = User::getCurrentLoginUser();
+            $page = $user->repository->getPageByName($pageName);
+            http_send_file($page->path);
+        } catch (NotFoundException $e){
+            throw new CHttpException(404, $e->getMessage());
+        }
+    }
+
     /**
      * 转换编码
      */

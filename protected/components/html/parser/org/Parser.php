@@ -52,7 +52,7 @@ class Parser {
                 $this->_processBlock($reader, $container, $blockType, $langType);
             }
             # tables
-            else if ($line[0] == '|'){
+            else if (ltrim($line)[0] == '|'){
                 $reader->prev();
                 $this->_processTable($reader, $container);
             }
@@ -114,6 +114,8 @@ class Parser {
         $thead = [];
         $tbody = [];
         while (($line = $reader->next()) !== false){
+            $line = ltrim($line);
+
             if ($line[0] != '|'){
                 $reader->prev();
                 break;
@@ -131,18 +133,19 @@ class Parser {
         }
 
         foreach ($thead as $tr) {
-            $trElem = Html::createElement('tr')->appendTo($table);
-            $table->append($trElem);
-            foreach ($tr as $td) {
-                $trElem->append(Html::createElement('th', self::createText($td)));
-            }
+            Html::createElement('tr',[
+                'children' => array_map(function($td){
+                    return Html::createElement('th', ['children' => [self::createText($td)]]);
+                }, $tr)
+            ])->appendTo($table);
         }
 
         foreach ($tbody as $tr) {
-            $trElem = Html::createElement('tr')->appendTo($table);
-            foreach ($tr as $td) {
-                $trElem->append(Html::createElement('td', self::createText($td)));
-            }
+            Html::createElement('tr',[
+                'children' => array_map(function($td){
+                    return Html::createElement('td', ['children' => [self::createText($td)]]);
+                }, $tr)
+            ])->appendTo($table);
         }
     }
 
