@@ -40,6 +40,22 @@ class Element {
         return $this->_attributes[$name];
     }
 
+    public function getClass(){
+        return $this->attr('class');
+    }
+
+    public function setClass($value){
+        $this->attr('class', $value);
+    }
+
+    public function getTitle(){
+        return $this->attr('title');
+    }
+
+    public function setTitle($value){
+        $this->attr('title', $value);
+    }
+
     /**
      * @param string $name
      * @param null $value
