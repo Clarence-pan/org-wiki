@@ -118,6 +118,16 @@ class Element {
         return $this;
     }
 
+    public function appendTo(Element $container){
+        $container->append($this);
+        return $this;
+    }
+
+    public function prependTo(Element $container){
+        $container->prepend($this);
+        return $this;
+    }
+
     public function getHtml(){
         return $this->toHtml();
     }
@@ -162,7 +172,11 @@ class Element {
      * @return string HTML
      */
     public function toHtml(){
-        return sprintf('<%s%s>%s</%s>', $this->tagName, $this->_getAttributesAsString(), $this->innerHtml, $this->tagName);
+        if ($this->tagName){
+            return sprintf('<%s%s>%s</%s>', $this->tagName, $this->_getAttributesAsString(), $this->innerHtml, $this->tagName);
+        } else {
+            return $this->innerHtml;
+        }
     }
 
     /**
