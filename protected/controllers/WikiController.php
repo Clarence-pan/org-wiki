@@ -38,7 +38,8 @@ class WikiController extends Controller {
         try{
             $user = User::getCurrentLoginUser();
             $page = $user->repository->getPageByName($pageName);
-            http_send_file($page->path);
+            header('Content-Type: '.$page->contentType);
+            readfile($page->path);
         } catch (NotFoundException $e){
             throw new CHttpException(404, $e->getMessage());
         }

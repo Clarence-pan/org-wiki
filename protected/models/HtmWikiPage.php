@@ -1,6 +1,6 @@
 <?php
 
 
-class HtmWikiPage extends WikiPage {
+class HtmWikiPage extends HtmlWikiPage {
 
 } 

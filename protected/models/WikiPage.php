@@ -9,6 +9,7 @@
  * @property string htmlCachePath
  * @property string name
  * @property string title
+ * @property string contentType
  * @property WikiRepository repository
  * @property User owner
  */
@@ -145,6 +146,10 @@ abstract class WikiPage extends BaseModel
         }
 
         return [];
+    }
+
+    public function getContentType(){
+        return 'text/wiki';
     }
 
     private $_name;

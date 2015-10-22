@@ -22,5 +22,9 @@ class OrgWikiPage extends WikiPage {
         });
     }
 
+    public function getContentType(){
+        return 'text/org';
+    }
+
     protected $_title;
 } 
