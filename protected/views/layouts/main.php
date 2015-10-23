@@ -41,6 +41,10 @@
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
+
+        <form method="get" action="<?= $this->createUrl('/wiki/search') ?>" style="display: inline-block">
+            <input type="text" name="keyword"  placeholder="search" style="width: 4em" />
+        </form>
 	</div><!-- mainmenu -->
 
 	<?php if(isset($this->breadcrumbs)):?>
