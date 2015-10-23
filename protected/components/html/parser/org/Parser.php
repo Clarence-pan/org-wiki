@@ -81,7 +81,7 @@ class Parser {
                     $reader->prev();
                     break;
                 } elseif ($lineIndentLevel > $level){
-                    $this->_processList($reader, $list, $matches);
+                    $this->_processList($reader, Html::createElement('li')->appendTo($list), $matches);
                 } else { // == the same level
                     $itemContent->innerHtml = $this->parse($content)->innerHtml;
                     $itemContent = Html::createElement('raw')->appendTo(Html::createElement('li')->appendTo($list));

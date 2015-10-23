@@ -12,7 +12,7 @@ class Html extends Element{
      * @return Element
      */
     public static function createElement($tagName, $properties=[]){
-        switch ($tagName){
+        switch (strtolower($tagName)){
             case 'br':
                 return new BrElement();
             case 'a':
@@ -23,6 +23,8 @@ class Html extends Element{
                 return new CodeBlockElement($properties);
             case 'text':
                 return new TextElement($properties['text']);
+            case 'raw':
+                return new RawHtmlElement($properties['innerHtml']);
             default:
                 return new Element($tagName, $properties);
         }
