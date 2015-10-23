@@ -77,7 +77,7 @@ class Parser {
         while (($line = $reader->next()) !== null){
             if (preg_match(self::RE_LIST_ITEM, $line, $matches)){
                 $lineIndentLevel = strlen($matches['indent']);
-                if ($lineIndentLevel < $level || ($leading != $matches['leading'] && !in_array($leading, ['-', '+', '*']))){
+                if ($lineIndentLevel < $level || ($leading != $matches['leading'] && in_array($leading, ['-', '+', '*']))){
                     $reader->prev();
                     break;
                 } elseif ($lineIndentLevel > $level){
