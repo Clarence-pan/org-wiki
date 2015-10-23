@@ -10,15 +10,16 @@
 
 $this->pageTitle = $keyword . ' - Search In Wiki';
 
+$clientScript = Yii::app()->clientScript;
 $clientScript->registerScriptFile('/static/js/jquery.js');
 
 $clientScript->registerCssFile('/static/css/wiki/search.css');
 $clientScript->registerScriptFile('/static/js/wiki/search.js');
 
+$encodedKeyword = htmlspecialchars($keyword);
 ?>
-
 <form class="form" method="get" action="<?= $this->createUrl('search') ?>">
-    <input type="text" name="keyword" value="<?= htmlspecialchars($keyword) ?>" autofocus="autofocus" />
+    <input type="text" name="keyword" value="<?= $encodedKeyword ?>" autofocus="autofocus" />
     <button type="submit">Search</button>
 </form>
 
@@ -34,7 +35,9 @@ $clientScript->registerScriptFile('/static/js/wiki/search.js');
         <div class="page-name"><?= CHtml::link($pageName, $this->createUrl('/wiki/view', ['pageName' => $pageName])) ?></div>
         <ul>
             <?php foreach ($pageFound as $line => $content): ?>
-                <li><code class="line-number"><?= $line ?>:</code> <span><?= htmlspecialchars($content) ?></span></li>
+                <li>
+                    <code class="line-number"><?= $line ?>:</code>
+                    <span><?= str_replace($encodedKeyword, "<strong>{$encodedKeyword}</strong>", htmlspecialchars($content)) ?></span></li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -47,6 +50,3 @@ $clientScript->registerScriptFile('/static/js/wiki/search.js');
     </div>
 <?php endif; ?>
 
-<div class="cmd">
-    <code><?= $cmd ?></code>
-</div>
