@@ -168,21 +168,21 @@ class Parser {
 
         $text = preg_replace_callback('~(^|\s+)`(?<text>[^`]+)`(\s+|$)~', function($matches){
             $text = $matches['text'];
-            return "<span class=\"mono\">{$text}</span>";
+            return "<code>{$text}</code>";
         }, $text);
         $text = preg_replace_callback('~(^|\s+)=(?<text>[^=]+)=(\s+|$)~', function($matches){
             $text = $matches['text'];
-            return "<span class=\"mono\">{$text}</span>";
+            return "<code>{$text}</code>";
         }, $text);
 
         $text = preg_replace_callback('/(^|\s+)~(?<text>[^~]+)~(\s+|$)/', function($matches){
             $text = $matches['text'];
-            return "<span class=\"mono\">{$text}</span>";
+            return "<code>{$text}</code>";
         }, $text);
 
         $text = preg_replace_callback('/(^|\s+)～(?<text>[^～]+)～(\s+|$)/', function($matches){
             $text = $matches['text'];
-            return "<span class=\"mono\">{$text}</span>";
+            return "<code>{$text}</code>";
         }, $text);
 
         $anchorList = $this->titleList;
