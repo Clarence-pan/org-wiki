@@ -43,7 +43,7 @@ echo "</ul>";
             }
 
             $('#content li a').each(function(){
-                pageUrlList.push($(this).attr('href'));
+                pageUrlList.push($(this).attr('href') + '?embed=1');
             });
 
             var expand = debounce(function(){

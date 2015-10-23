@@ -24,13 +24,14 @@ class WikiController extends Controller {
         $this->render('index', array('pages' => $pages));
     }
 
-    public function actionView($pageName){
+    public function actionView($pageName, $embed=false){
         try{
             $user = User::getCurrentLoginUser();
             $page = $user->repository->getPageByName($pageName);
             if ($page instanceof ImageWikiPage){
                 $this->renderRawWikiPage($page);
             } else {
+                $this->layout = $embed ? '' : $this->layout;
                 $this->render('view', array('page' => $page));
             }
         } catch (NotFoundException $e){
