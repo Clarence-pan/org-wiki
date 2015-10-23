@@ -1,10 +1,18 @@
 ul {
     list-style: none;
+    padding-left: 0;
 }
+
 .line-number{
     display: inline-block;
     text-align: right;
     width: 5em;
+    color: #008200;
+}
+
+strong{
+    font-weight: bold;
+    color: red;
 }
 
 #content{
