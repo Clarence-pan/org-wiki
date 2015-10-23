@@ -23,7 +23,6 @@ $this->pageTitle = $keyword . ' - Search In Wiki'
 </div>
 
 <div class="search-results">
-
 <?php foreach ($found as $pageName => $pageFound): ?>
     <div class="search-result-page">
         <div class="page-name"><?= CHtml::link($pageName, $this->createUrl('view', ['pageName' => $pageName])) ?></div>
@@ -34,9 +33,14 @@ $this->pageTitle = $keyword . ' - Search In Wiki'
         </ul>
     </div>
 <?php endforeach; ?>
-
 </div>
 
-<div class="search-result-comment">
-    <?= implode('<br/>', array_map('htmlspecialchars', $others)) ?>
+<?php if (!empty($others)): ?>
+    <div class="search-result-comment">
+        <?= implode('<br/>', array_map('htmlspecialchars', $others)) ?>
+    </div>
+<?php endif; ?>
+
+<div class="cmd">
+    <code><?= $cmd ?></code>
 </div>
