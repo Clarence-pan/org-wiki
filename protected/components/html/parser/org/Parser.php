@@ -148,7 +148,7 @@ class Parser {
         $text = preg_replace_callback('~(^|\s+)\*(?<text>\w+)\*(\s+|$)~', function($matches){
             $text = $matches['text'];
             return "<strong>{$text}</strong>";
-        }, $text);
+        }, trim($text));
 
         $text = preg_replace_callback('~(^|\s+)/(?<text>\w+)/(\s+|$)~', function($matches){
             $text = $matches['text'];
