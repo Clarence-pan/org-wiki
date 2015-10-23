@@ -59,7 +59,7 @@ class Parser {
         }
     }
 
-    const RE_LIST_ITEM = '/^(?<indent>\s*)(?<leading>\*|-|+|(?:\d+(?:.|\)|>)))\s+(?<content>.*)$/';
+    const RE_LIST_ITEM = '/^(?<indent>\s*)(?<leading>\*|-|\+|(?:\d+(?:.|\)|>)))\s+(?<content>.*)$/';
     private function _processList(TextReader $reader, Element $container, $matches){
         $level = strlen($matches['indent']);
         $leading = $matches['leading'];
