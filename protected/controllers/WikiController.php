@@ -49,6 +49,16 @@ class WikiController extends Controller {
         }
     }
 
+    public function actionSearch($keyword){
+        try{
+            $user = User::getCurrentLoginUser();
+            $searchResult = $user->repository->search($keyword);
+            $this->render('search', $searchResult);
+        } catch (NotFoundException $e){
+            throw new CHttpException(404, $e->getMessage());
+        }
+    }
+
     /**
      * 转换编码
      */

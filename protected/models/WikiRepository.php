@@ -71,24 +71,39 @@ class WikiRepository extends CActiveRecord
 	}
 
 	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
+     * @param string $keyword
+     * @return array
 	 */
-	public function search()
+	public function search($keyword)
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
+        $cmd = sprintf('find . -type d "(" -path "*/.htmlCache" -o -path "*/.git" ")" -prune -type d "(" -name ".#*" -o -name "*.png" -o -name "*.gif" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.bmp" -o -name "*.bin" -o -name "*.bak" -o -name "*~" -o -name "*.ico" ")" -prune -o  -type f "(" -iname "*.*" ")" -print0 | "xargs" -0 grep -i -nH -e "%s"', addslashes($keyword));
+        exec($cmd, $outputLines, $error);
+        if ($error !== 0){
+            throw new CmdExecutionFailException($cmd, $error);
+        }
 
-		$criteria=new CDbCriteria;
+        $found = [];
+        $others = [];
+        foreach ($outputLines as $line) {
+            if (preg_match('/^(?<file>[^:]*):(?<line>\d+):(?<content>.*)$/', $line, $matches)){
+                if (!isset($found[$matches['file']])){
+                    $found[$matches['file']] = [];
+                }
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('ownerId',$this->ownerId);
-		$criteria->compare('path',$this->path,true);
+                $found[$matches['file']][$matches['line']] = $matches['content'];
+            } else {
+                $others[] = $line;
+            }
+        }
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        return [
+            'repo' => $this,
+            'keyword' => $keyword,
+            'cmd' => $cmd,
+            'found' => $found,
+            'others' => $others
+        ];
+    }
 
     /**
      * @return string
