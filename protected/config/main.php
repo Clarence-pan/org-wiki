@@ -45,6 +45,7 @@ return array(
             'showScriptName' => false,
 			'rules'=>array(
                 'list' => 'wiki/index',
+                'search' => 'wiki/search',
                 sprintf('wiki/<pageName:.+\.(%s)>', WIKI_AVAILABLE_FILE_TYPES) => 'wiki/view',
                 sprintf('raw/<pageName:.+\.(%s)>', WIKI_AVAILABLE_FILE_TYPES) => 'wiki/viewRaw',
                 'page/<view:\w+>' => 'site/page',

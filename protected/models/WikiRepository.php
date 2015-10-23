@@ -83,6 +83,7 @@ class WikiRepository extends CActiveRecord
             ];
         }
 
+        chdir($this->path);
         $cmd = sprintf('find . -type d "(" -path "*/.htmlCache" -o -path "*/.git" ")" -prune -type d "(" -name ".#*" -o -name "*.png" -o -name "*.gif" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.bmp" -o -name "*.bin" -o -name "*.bak" -o -name "*~" -o -name "*.ico" ")" -prune -o  -type f "(" -iname "*.*" ")" -print0 | "xargs" -0 grep -i -nH -e "%s"', addslashes($keyword));
         exec($cmd, $outputLines, $error);
         if ($error !== 0){
@@ -93,6 +94,7 @@ class WikiRepository extends CActiveRecord
         $others = [];
         foreach ($outputLines as $line) {
             if (preg_match('/^(?<file>[^:]*):(?<line>\d+):(?<content>.*)$/', $line, $matches)){
+                $matches['file'] = Utils::normalizePath($matches['file']);
                 if (!isset($found[$matches['file']])){
                     $found[$matches['file']] = [];
                 }

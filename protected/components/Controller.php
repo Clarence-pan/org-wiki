@@ -35,6 +35,8 @@ class Controller extends CController
             return '/list'.self::buildQuery($params);
         } elseif ($route == '/site/page' && $params['view']){
             return '/page/'.$params['view'];
+        } elseif ($route == '/wiki/search'){
+            return '/search'.self::buildQuery($params);
         }
 
         return parent::createUrl($route, $params, $ampersand);

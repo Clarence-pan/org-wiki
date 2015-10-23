@@ -25,7 +25,7 @@ $this->pageTitle = $keyword . ' - Search In Wiki'
 <div class="search-results">
 <?php foreach ($found as $pageName => $pageFound): ?>
     <div class="search-result-page">
-        <div class="page-name"><?= CHtml::link($pageName, $this->createUrl('view', ['pageName' => $pageName])) ?></div>
+        <div class="page-name"><?= CHtml::link($pageName, $this->createUrl('/wiki/view', ['pageName' => $pageName])) ?></div>
         <ul>
             <?php foreach ($pageFound as $line => $content): ?>
                 <li><code><?= $line ?></code> <span><?= htmlspecialchars($content) ?></span></li>
