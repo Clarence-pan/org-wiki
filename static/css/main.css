@@ -15,7 +15,7 @@ body
 	border: 1px solid #C9E0ED;
     width: auto;
     max-width: 1000px;
-    min-width: 480px;
+    min-width: 360px;
 }
 
 #header
@@ -27,7 +27,7 @@ body
 
 #content
 {
-    padding: 20px;
+    padding: 1em 0;
 }
 
 #sidebar
