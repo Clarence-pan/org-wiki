@@ -47,11 +47,51 @@ class Parser {
                 $reader->prev();
                 $this->_processTable($reader, $container);
             }
+            # lists
+            else if (preg_match(self::RE_LIST_ITEM, $line, $matches)){
+                $this->_processList($reader, $container, $matches);
+            }
             # others
             else {
                 $container->append(self::createText($line));
                 $container->append(new BrElement());
             }
+        }
+    }
+
+    const RE_LIST_ITEM = '/^(?<indent>\s+)(?<leading>\*|-|+|(?:\d+(?:.|\)|>)))\s+(?<content>.*)$/';
+    private function _processList(TextReader $reader, Element $container, $matches){
+        $level = strlen($matches['indent']);
+
+        if (in_array($matches['leading'], ['-', '+', '*'])){
+            $list = Html::createElement('ul');
+        } else {
+            $list = Html::createElement('ol');
+        }
+
+        $list->appendTo($container);
+
+        $content = $matches['content'];
+        while (($line = $reader->next()) !== null){
+            if (preg_match(self::RE_LIST_ITEM, $line, $matches)){
+                $lineIndentLevel = strlen($matches['indent']);
+                if ($lineIndentLevel < $level){
+                    break;
+                } elseif ($lineIndentLevel > $level){
+                    $this->_processList($reader, $list, $matches);
+                } else {
+                    Html::createElement('li', ['children' => [self::createText($content)]])->appendTo($list);
+                    $content = $matches['content'];
+                }
+            } else if (preg_match('/^(?<indent>\s+)\S+$/', $line, $matches) && strlen($matches['indent']) > $level) {
+                $content .= PHP_EOL . substr($line, $level);
+            } else {
+                break;
+            }
+        }
+
+        if ($content){
+            Html::createElement('li', ['children' => $this->parse($content)->children ])->appendTo($list);
         }
     }
 
