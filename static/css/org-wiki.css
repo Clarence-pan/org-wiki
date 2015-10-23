@@ -46,7 +46,7 @@ html{
     text-align: right;
 }
 
-.mono{
+code{
     font-family: 'andale mono', 'lucida console', monospace;
     font-size: 0.9em;
     background-color: #eee;
