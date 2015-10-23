@@ -49,7 +49,7 @@ class WikiController extends Controller {
         }
     }
 
-    public function actionSearch($keyword){
+    public function actionSearch($keyword=null){
         try{
             $user = User::getCurrentLoginUser();
             $searchResult = $user->repository->search($keyword);
