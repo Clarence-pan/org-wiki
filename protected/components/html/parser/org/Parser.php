@@ -72,6 +72,7 @@ class Parser {
         }
 
         $list->appendTo($container);
+        $item = Html::createElement('raw')->appendTo($list);
 
         while (($line = $reader->next()) !== null){
             if (preg_match(self::RE_LIST_ITEM, $line, $matches)){
@@ -82,7 +83,8 @@ class Parser {
                 } elseif ($lineIndentLevel > $level){
                     $this->_processList($reader, $list, $matches);
                 } else { // == the same level
-                    Html::createElement('li', ['children' => [self::createText($content)]])->appendTo($list);
+                    $item->innerHtml = $this->parse($content)->innerHtml;
+                    $item = Html::createElement('raw')->appendTo($list);
                     $content = $matches['content'];
                 }
             } else if (preg_match('/^(?<indent>\s+)\S+$/', $line, $matches) && strlen($matches['indent']) > $level) {
@@ -94,7 +96,7 @@ class Parser {
         }
 
         if ($content){
-            Html::createElement('li', ['children' => $this->parse($content)->children ])->appendTo($list);
+            $item->innerHtml = $this->parse($content)->innerHtml;
         }
     }
 
