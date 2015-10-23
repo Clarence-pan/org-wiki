@@ -3,7 +3,7 @@
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
 define('WIKI_AVAILABLE_FILE_TYPES', 'org|md|htm|html|txt|png|jpg|jpeg|bmp|gif');
-define('WIKI_HTML_CACHE_ENABLE', false);
+define('WIKI_HTML_CACHE_ENABLE', !YII_DEBUG);
 
 require __DIR__.'/auto_loader.php';
 
