@@ -6,7 +6,7 @@ ul {
 .line-number{
     display: inline-block;
     text-align: right;
-    width: 5em;
+    width: 4em;
     color: #008200;
 }
 
