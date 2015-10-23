@@ -27,8 +27,6 @@ foreach ($page->getCodeBlockTypes() as $lang) {
     $clientScript->registerScriptFile("/static/syntaxhighlighter/scripts/shBrush{$lang}.js");
 }
 
-
-
 ?>
 
 <div id="wiki-content">

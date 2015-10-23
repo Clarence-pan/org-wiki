@@ -31,7 +31,7 @@ class WikiController extends Controller {
             if ($page instanceof ImageWikiPage){
                 $this->renderRawWikiPage($page);
             } else {
-                $this->layout = $embed ? '' : $this->layout;
+                $this->layout = $embed ? false : $this->layout;
                 $this->render('view', array('page' => $page));
             }
         } catch (NotFoundException $e){

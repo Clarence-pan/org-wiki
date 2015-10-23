@@ -43,7 +43,7 @@ echo "</ul>";
             }
 
             $('#content li a').each(function(){
-                pageUrlList.push($(this).attr('href') + '?embed=1');
+                pageUrlList.push($(this).attr('href'));
             });
 
             var expand = debounce(function(){
@@ -72,7 +72,7 @@ echo "</ul>";
             }
 
             $("<h1></h1>").append($("<a></a>").text(pageUrl).attr("href", pageUrl)).appendTo('#allWiki');
-            $("<iframe class='wiki-page-container'></iframe>").attr('src', pageUrl).appendTo('#allWiki');
+            $("<iframe class='wiki-page-container'></iframe>").attr('src', pageUrl + '?embed=1').appendTo('#allWiki');
         }
     });
 
