@@ -145,10 +145,11 @@ class Parser {
      * @return Element
      */
     private function createText($text){
+        $text = trim($text);
         $text = preg_replace_callback('~(^|\s+)\*(?<text>\w+)\*(\s+|$)~', function($matches){
             $text = $matches['text'];
             return "<strong>{$text}</strong>";
-        }, trim($text));
+        }, $text);
 
         $text = preg_replace_callback('~(^|\s+)/(?<text>\w+)/(\s+|$)~', function($matches){
             $text = $matches['text'];
