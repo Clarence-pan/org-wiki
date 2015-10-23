@@ -35,7 +35,7 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
+				array('label'=>'Home', 'url'=>array('/wiki/view', 'pageName' => 'index.org')),
                 array('label'=>'List', 'url'=>array('/wiki/index')),
 //				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 //				array('label'=>'Contact', 'url'=>array('/site/contact')),
@@ -44,6 +44,7 @@
 			),
 		)); ?>
 	</div><!-- mainmenu -->
+
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,
@@ -53,8 +54,6 @@
 	<?php echo $content; ?>
 
 	<div class="clear"></div>
-
-<!--	<div id="footer"> </div><!-- footer -->-->
 
 </div><!-- page -->
 
