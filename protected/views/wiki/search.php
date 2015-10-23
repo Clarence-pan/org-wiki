@@ -8,19 +8,25 @@
  * @var $others array
  */
 
-$this->pageTitle = $keyword . ' - Search In Wiki'
+$this->pageTitle = $keyword . ' - Search In Wiki';
 
+$clientScript->registerScriptFile('/static/js/jquery.js');
+
+$clientScript->registerCssFile('/static/css/wiki/search.css');
+$clientScript->registerScriptFile('/static/js/wiki/search.js');
 
 ?>
 
 <form class="form" method="get" action="<?= $this->createUrl('search') ?>">
-    <input type="text" name="keyword" value="<?= htmlspecialchars($keyword) ?>" />
+    <input type="text" name="keyword" value="<?= htmlspecialchars($keyword) ?>" autofocus="autofocus" />
     <button type="submit">Search</button>
 </form>
 
-<div class="tip">
-    <?= count($found) ?> page(s) found.
-</div>
+<?php if (!empty($keyword)): ?>
+    <div class="tip">
+        <?= count($found) ?> page(s) found.
+    </div>
+<?php endif; ?>
 
 <div class="search-results">
 <?php foreach ($found as $pageName => $pageFound): ?>
@@ -28,7 +34,7 @@ $this->pageTitle = $keyword . ' - Search In Wiki'
         <div class="page-name"><?= CHtml::link($pageName, $this->createUrl('/wiki/view', ['pageName' => $pageName])) ?></div>
         <ul>
             <?php foreach ($pageFound as $line => $content): ?>
-                <li><code><?= $line ?></code> <span><?= htmlspecialchars($content) ?></span></li>
+                <li><code class="line-number"><?= $line ?>:</code> <span><?= htmlspecialchars($content) ?></span></li>
             <?php endforeach; ?>
         </ul>
     </div>
