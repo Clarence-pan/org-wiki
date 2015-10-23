@@ -161,6 +161,11 @@ class Parser {
             return "<span class=\"underline\">{$text}</span>";
         }, $text);
 
+        $text = preg_replace_callback('~(^|\s+)\+(?<text>[^+]+)\+(\s+|$)~', function($matches){
+            $text = $matches['text'];
+            return "<span class=\"deleted\">{$text}</span>";
+        }, $text);
+
         $text = preg_replace_callback('~(^|\s+)=(?<text>[^=]+)=(\s+|$)~', function($matches){
             $text = $matches['text'];
             return "<span class=\"mono\">{$text}</span>";
