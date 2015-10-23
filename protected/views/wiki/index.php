@@ -46,12 +46,12 @@ echo "</ul>";
                 pageUrlList.push($(this).attr('href'));
             });
 
-            var expand = debounce(function(){
+            var expand = function(){
                 if (curPage < pageUrlList.length){
                     openWikiPage(pageUrlList[curPage]);
                     curPage += 1;
                 }
-            });
+            };
 
             expand();
 
