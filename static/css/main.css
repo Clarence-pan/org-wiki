@@ -230,3 +230,7 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+.form-wrapper{
+    padding: 1.8rem;
+}
