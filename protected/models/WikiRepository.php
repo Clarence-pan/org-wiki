@@ -87,7 +87,13 @@ class WikiRepository extends CActiveRecord
         $cmd = sprintf('find . -type d "(" -path "*/.htmlCache" -o -path "*/.git" ")" -prune -type d "(" -name ".#*" -o -name "*.png" -o -name "*.gif" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.bmp" -o -name "*.bin" -o -name "*.bak" -o -name "*~" -o -name "*.ico" ")" -prune -o  -type f "(" -iname "*.*" ")" -print0 | "xargs" -0 grep -i -nH -e "%s"', addslashes($keyword));
         exec($cmd, $outputLines, $error);
         if ($error !== 0){
-            throw new CmdExecutionFailException($cmd, $error);
+            return [
+                'repo' => $this,
+                'keyword' => $keyword,
+                'cmd' => $cmd,
+                'found' => [],
+                'others' => $outputLines,
+            ];
         }
 
         $found = [];
