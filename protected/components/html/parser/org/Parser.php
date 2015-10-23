@@ -54,7 +54,9 @@ class Parser {
             # others
             else {
                 $container->append(self::createText($line));
-                $container->append(new BrElement());
+                if (!$reader->eof()){
+                    $container->append(new BrElement());
+                }
             }
         }
     }
@@ -72,19 +74,33 @@ class Parser {
         }
 
         $list->appendTo($container);
-        $itemContent = Html::createElement('raw')->appendTo(Html::createElement('li')->appendTo($list));
+        $listItem = Html::createElement('li')->appendTo($list);
+        $itemContent = Html::createElement('raw')->appendTo($listItem);
 
         while (($line = $reader->next()) !== null){
             if (preg_match(self::RE_LIST_ITEM, $line, $matches)){
                 $lineIndentLevel = strlen($matches['indent']);
-                if ($lineIndentLevel < $level || ($leading != $matches['leading'] && in_array($leading, ['-', '+', '*']))){
+                if ($lineIndentLevel < $level){
                     $reader->prev();
                     break;
                 } elseif ($lineIndentLevel > $level){
-                    $this->_processList($reader, Html::createElement('li')->appendTo($list), $matches);
+                    if ($content){
+                        $itemContent->innerHtml = $this->parse($content)->innerHtml;
+                    }
+                    $this->_processList($reader, $listItem, $matches);
+                    $itemContent = Html::createElement('raw')->appendTo($listItem);
+                    $content = '';
                 } else { // == the same level
-                    $itemContent->innerHtml = $this->parse($content)->innerHtml;
-                    $itemContent = Html::createElement('raw')->appendTo(Html::createElement('li')->appendTo($list));
+                    if ($leading != $matches['leading'] && in_array($leading, ['-', '+', '*'])){
+                        $reader->prev();
+                        break;
+                    }
+
+                    if ($content){
+                        $itemContent->innerHtml = $this->parse($content)->innerHtml;
+                    }
+                    $listItem = Html::createElement('li')->appendTo($list);
+                    $itemContent = Html::createElement('raw')->appendTo($listItem);
                     $content = $matches['content'];
                 }
             } else if (preg_match('/^(?<indent>\s+)\S+$/', $line, $matches) && strlen($matches['indent']) > $level) {
@@ -98,6 +114,8 @@ class Parser {
         if ($content){
             $itemContent->innerHtml = $this->parse($content)->innerHtml;
         }
+
+        echo PHP_EOL, '<!-- ', PHP_EOL, $list->html, PHP_EOL, '-->', PHP_EOL;
     }
 
     private function _processHeading(TextReader $reader, Element $container, $head, $level){
