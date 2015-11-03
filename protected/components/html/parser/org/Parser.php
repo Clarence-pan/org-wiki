@@ -293,7 +293,7 @@ class Parser {
         } else {
             $link = Html::createElement('a', [
                 'href' => $url,
-                'children' => $text ? [ $this->createText($text) ] : []
+                'children' => $text ? [ $this->createText($text) ] : [ Html::fromText($url) ]
             ])->toHtml();
         }
 

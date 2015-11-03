@@ -30,4 +30,19 @@ class Html extends Element{
         }
     }
 
+    /**
+     * @param $html string
+     * @return RawHtmlElement
+     */
+    public static function fromHtml($html){
+        return new RawHtmlElement($html);
+    }
+
+    /**
+     * @param $text string
+     * @return TextElement
+     */
+    public static function fromText($text){
+        return new TextElement($text);
+    }
 }
