@@ -59,6 +59,23 @@ class WikiController extends Controller {
         }
     }
 
+    public function actionNew($pageName=null){
+        echo "todo: new a page ".$pageName;
+    }
+
+    public function actionEdit($pageName){
+        echo "todo: edit page ".$pageName;
+    }
+
+    public function actionUpdate($pageName){
+        echo "todo: update a page";
+        if (!Yii::app()->request->isPostRequest){
+            throw new CHttpException(400, "Invalid request type");
+        }
+
+        
+    }
+
     /**
      * 转换编码
      */

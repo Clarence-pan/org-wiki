@@ -46,7 +46,10 @@ return array(
 			'rules'=>array(
                 'list' => 'wiki/index',
                 'search' => 'wiki/search',
+                'wiki/new' => 'wiki/new',
+                sprintf('wiki/new/<pageName:.+\.(%s)>', WIKI_AVAILABLE_FILE_TYPES) => 'wiki/new',
                 sprintf('wiki/<pageName:.+\.(%s)>', WIKI_AVAILABLE_FILE_TYPES) => 'wiki/view',
+                sprintf('wiki/<pageName:.+\.(%s)>/<action:(edit|update)>', WIKI_AVAILABLE_FILE_TYPES) => 'wiki/<action>',
                 sprintf('raw/<pageName:.+\.(%s)>', WIKI_AVAILABLE_FILE_TYPES) => 'wiki/viewRaw',
                 'page/<view:\w+>' => 'site/page',
                 '<action:\w+>' => 'site/<action>',
